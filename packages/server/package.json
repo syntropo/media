@@ -1,0 +1,33 @@
+{
+  "name": "@syntropo/media-server",
+  "version": "0.0.1",
+  "description": "Media Monorepo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syntropo/media.git"
+  },
+  "author": {
+    "name": "Syntropo"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.2.0",
+    "express": "4.18.2",
+    "fluent-ffmpeg": "2.1.2"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.15",
+    "@types/fluent-ffmpeg": "2.1.20",
+    "esbuild": "0.16.6"
+  },
+  "scripts": {
+    "start": "node esm/express-ffmpeg.js",
+
+    "build-image": "docker compose --file dev/image/docker-compose.yml build lambda",
+
+    "build-express": "esbuild src/express.ts --define:process.env.FLUENTFFMPEG_COV=false --packages=external --bundle --outfile=esm/express-ffmpeg.js --platform=node",
+    "build-lambda": "esbuild src/lambda.ts --define:process.env.FLUENTFFMPEG_COV=false --packages=external --bundle --outfile=esm/lambda-ffmpeg.js --platform=neutral",
+    "build": "run-s build-image"
+  },
+  "workspaces": ["packages/*"]
+}

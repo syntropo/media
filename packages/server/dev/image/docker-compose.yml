@@ -1,0 +1,7 @@
+version: "3"
+services:
+  lambda:
+    build:
+      dockerfile: dev/image/Dockerfile.cnf
+      context: ../../
+    image: 216119970089.dkr.ecr.us-east-1.amazonaws.com/moviemasher-express-ffmpeg:0.0.26
